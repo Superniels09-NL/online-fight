@@ -106,6 +106,13 @@ let Player2_X = 0
 let rocket_2_Y = 0
 let rocket_Y = 0
 let Game_end = false
+basic.showLeds(`
+    . . # . .
+    . . # . .
+    . . # . .
+    . . # . .
+    . . # . .
+    `)
 Game_end = false
 let HP = 5
 radio.sendMessage(RadioMessage.Connect)
@@ -114,20 +121,20 @@ rocket_2_Y = 100
 basic.forever(function () {
     if (_2_ready == 1 && !(ready == 1)) {
         basic.showLeds(`
-            # . . . .
-            # # . . .
-            # # # . .
-            # # # # .
-            # # # # #
+            . . # # #
+            . . # # #
+            . . # # #
+            . . # # #
+            . . # # #
             `)
     }
     if (ready == 1 && !(_2_ready == 1)) {
         basic.showLeds(`
-            # . . . .
-            # # . . .
             # # # . .
-            # # # # .
-            # # # # #
+            # # # . .
+            # # # . .
+            # # # . .
+            # # # . .
             `)
     }
 })
