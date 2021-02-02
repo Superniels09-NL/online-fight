@@ -6,7 +6,8 @@ enum RadioMessage {
     fight = 45636,
     DED = 18817,
     ready = 31336,
-    yes = 16427
+    yes = 16427,
+    cmoon = 18781
 }
 radio.onReceivedMessage(RadioMessage.A, function () {
     Player2_X += -1
@@ -76,6 +77,111 @@ input.onButtonPressed(Button.AB, function () {
 })
 radio.onReceivedMessage(RadioMessage.DED, function () {
     Game_end = true
+    basic.showLeds(`
+        . . . . .
+        . . . . .
+        . # # # .
+        . # # # .
+        . # # # .
+        `)
+    basic.showLeds(`
+        . . . . .
+        . . # . .
+        . # # # .
+        . # # # .
+        . # # # .
+        `)
+    basic.showLeds(`
+        . . . . .
+        . . # . .
+        . . . . .
+        . # # # .
+        . # # # .
+        `)
+    basic.showLeds(`
+        . . . . .
+        . . # . .
+        . . . . .
+        . . . . .
+        . # # # .
+        `)
+    basic.showLeds(`
+        . . . . .
+        . . . . .
+        . . # . .
+        . . . . .
+        . . . . .
+        `)
+    basic.showLeds(`
+        . # # # .
+        . # # # .
+        . # # # .
+        . . . . .
+        . . # . .
+        `)
+    basic.showLeds(`
+        . # # # .
+        . # # # .
+        . # # # .
+        . . . . .
+        . . # . .
+        `)
+    basic.showLeds(`
+        . # # # .
+        . # # # .
+        . # # # .
+        . . # . .
+        . . . . .
+        `)
+    basic.showLeds(`
+        . # # # .
+        # . . . #
+        # . # . #
+        . . . . .
+        . . . . .
+        `)
+    basic.showLeds(`
+        . # . # .
+        # . # . #
+        . . . . .
+        # . . . #
+        . . . . .
+        `)
+    basic.showLeds(`
+        . # # # .
+        . . . . .
+        # . . . .
+        . . . . #
+        . . . . .
+        `)
+    basic.showLeds(`
+        . . # # .
+        . # . . .
+        . . . . .
+        # . . . .
+        . . . . #
+        `)
+    basic.showLeds(`
+        . . # . .
+        . . . # .
+        . # . . .
+        . . . . .
+        # . . . .
+        `)
+    basic.showLeds(`
+        . . . . .
+        . . # . .
+        . . . . .
+        . . . # .
+        . # . . .
+        `)
+    basic.showLeds(`
+        . . . . .
+        . . . . .
+        . . . . .
+        . . # . .
+        . . . . .
+        `)
     basic.showIcon(IconNames.Yes)
 })
 input.onButtonPressed(Button.B, function () {
@@ -93,6 +199,22 @@ radio.onReceivedMessage(RadioMessage.B, function () {
 })
 radio.onReceivedMessage(RadioMessage.yes, function () {
     Player2_X = 4
+})
+radio.onReceivedMessage(RadioMessage.cmoon, function () {
+    basic.showLeds(`
+        . . # # .
+        . . # . #
+        . . # # .
+        . . # . #
+        . . # # .
+        `)
+    basic.showLeds(`
+        . . # . #
+        . . # # .
+        . . # . #
+        . . # # .
+        . . # . #
+        `)
 })
 let rocket_X = 0
 let rocket_in_screen = false
@@ -121,29 +243,37 @@ rocket_2_Y = 100
 basic.forever(function () {
     if (_2_ready == 1 && !(ready == 1)) {
         basic.showLeds(`
-            . . # # #
-            . . # # #
-            . . # # #
-            . . # # #
-            . . # # #
+            . . # . #
+            . . # # .
+            . . # . #
+            . . # # .
+            . . # . #
             `)
     }
     if (ready == 1 && !(_2_ready == 1)) {
         basic.showLeds(`
-            # # # . .
-            # # # . .
-            # # # . .
-            # # # . .
-            # # # . .
+            # . # . .
+            . # # . .
+            # . # . .
+            . # # . .
+            # . # . .
             `)
     }
 })
 basic.forever(function () {
-    if (ready == 0 && input.buttonIsPressed(Button.AB)) {
-        radio.sendMessage(RadioMessage.ready)
-        ready = 1
-        if (admin == 0) {
-            admin = 1
+    if (input.buttonIsPressed(Button.AB)) {
+        if (ready == 0) {
+            radio.sendMessage(RadioMessage.ready)
+            ready = 1
+            if (admin == 0) {
+                admin = 1
+            }
+            basic.pause(1000)
+        } else {
+            if (_2_ready == 0) {
+                radio.sendMessage(RadioMessage.cmoon)
+                basic.pause(1000)
+            }
         }
     }
 })
@@ -151,6 +281,41 @@ basic.forever(function () {
     if (HP == 0 && Game_end == false) {
         radio.sendMessage(RadioMessage.DED)
         Game_end = true
+        basic.showLeds(`
+            . . . . .
+            . . . . .
+            . # # # .
+            . # # # .
+            . # # # .
+            `)
+        basic.showLeds(`
+            . . # . .
+            . . . . .
+            . # # # .
+            . # # # .
+            . # # # .
+            `)
+        basic.showLeds(`
+            . . . . .
+            . . # . .
+            . # # # .
+            . # # # .
+            . # # # .
+            `)
+        basic.showLeds(`
+            . . . . .
+            . . . . .
+            # . # . #
+            # . . . #
+            . # # # .
+            `)
+        basic.showLeds(`
+            . . . . .
+            . . . . .
+            . . . . .
+            # . # . #
+            # # # # #
+            `)
         basic.showIcon(IconNames.No)
     }
 })
